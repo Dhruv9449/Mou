@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  mou-api:
+    build: .
+    ports:
+      - 80:8000
+    volumes:
+      - ./:/user/src/app
+    env_file:
+      - ./.env/.local
+    networks:
+      - mou-api-network
+
+networks:
+  mou-api-network:
