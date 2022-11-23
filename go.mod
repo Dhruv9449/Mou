@@ -6,6 +6,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.40.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	golang.org/x/oauth2 v0.2.0
+	google.golang.org/api v0.103.0
 	gorm.io/driver/sqlite v1.4.3
 	gorm.io/gorm v1.24.1
 )
@@ -34,7 +35,6 @@ require (
 	golang.org/x/net v0.2.0 // indirect
 	golang.org/x/sys v0.2.0 // indirect
 	golang.org/x/text v0.4.0 // indirect
-	google.golang.org/api v0.103.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6 // indirect
 	google.golang.org/grpc v1.51.0 // indirect

@@ -4,6 +4,7 @@ import (
 	"github.com/Dhruv9449/mou/pkg/database"
 	"github.com/Dhruv9449/mou/pkg/handlers"
 	"github.com/Dhruv9449/mou/pkg/oauth"
+	"github.com/Dhruv9449/mou/pkg/utils/driveutils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -12,6 +13,7 @@ import (
 func main() {
 	database.Connect()
 	oauth.InitializeAuth()
+	driveutils.InitializeDrive()
 
 	app := fiber.New()
 
@@ -26,6 +28,7 @@ func main() {
 	handlers.AuthRouter(app)
 	handlers.UserRouter(app)
 	handlers.BlogRouter(app)
+	handlers.DriveRouter(app)
 
 	app.Listen(":8000")
 }

@@ -3,7 +3,6 @@ package database
 import (
 	"log"
 
-	"github.com/Dhruv9449/mou/pkg/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -16,13 +15,4 @@ func Connect() {
 	if err != nil {
 		log.Fatal("Failed to connect to database!")
 	}
-
-	MODELS := []interface{}{
-		&models.User{},
-		&models.BlogPost{},
-		&models.Comment{},
-	}
-
-	DB.AutoMigrate(MODELS...)
-
 }
