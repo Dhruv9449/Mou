@@ -6,7 +6,7 @@ import (
 
 type BlogPost struct {
 	ID        uint   `gorm:"primary_key"`
-	Title     string `gorm:"not null"`
+	Title     string `gorm:"not null,unique"`
 	Content   string `gorm:"not null"`
 	Thumbnail string
 	CreatedOn time.Time `gorm:"not null"`

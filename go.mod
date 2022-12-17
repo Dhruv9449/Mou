@@ -3,6 +3,7 @@ module github.com/Dhruv9449/mou
 go 1.19
 
 require (
+	github.com/dustin/go-humanize v1.0.0
 	github.com/gofiber/fiber/v2 v2.40.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	golang.org/x/oauth2 v0.2.0

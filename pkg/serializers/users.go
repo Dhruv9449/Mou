@@ -18,6 +18,7 @@ func UserLoginSerializer(user models.User, token string) map[string]interface{} 
 		"email":   user.Email,
 		"name":    user.Name,
 		"picture": user.Picture,
+		"role":    user.Role,
 		"token":   token,
 	}
 }

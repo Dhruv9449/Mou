@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"strings"
 
@@ -12,10 +11,11 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-func CreateJWTToken(id uint, email string) (string, error) {
+func CreateJWTToken(id uint, email string, role string) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["id"] = id
 	claims["email"] = email
+	claims["role"] = role
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(os.Getenv("JWT_SECRET_KEY")))
@@ -39,7 +39,6 @@ func ValidateTokenAndGetUser(tokenString string) (models.User, error) {
 	if ok && token.Valid {
 		user := models.User{}
 		if database.DB.Where("id = ?", claims["id"]).First(&user).RowsAffected == 0 {
-			fmt.Println("User not found")
 			return models.User{}, errors.New("user not found")
 		}
 		database.DB.Where("id = ?", claims["id"]).First(&user)

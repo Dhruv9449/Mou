@@ -8,6 +8,8 @@ func InitializeModels() {
 		&User{},
 		&BlogPost{},
 		&Comment{},
+		&File{},
+		&Folder{},
 	}
 
 	database.DB.AutoMigrate(MODELS...)

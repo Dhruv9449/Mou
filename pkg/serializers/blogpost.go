@@ -1,6 +1,11 @@
 package serializers
 
-import "github.com/Dhruv9449/mou/pkg/models"
+import (
+	"github.com/Dhruv9449/mou/pkg/database"
+	"github.com/Dhruv9449/mou/pkg/models"
+	"github.com/dustin/go-humanize"
+	"gorm.io/gorm/clause"
+)
 
 func BlogPostSerializer(blogPost models.BlogPost) map[string]interface{} {
 	return map[string]interface{}{
@@ -8,8 +13,9 @@ func BlogPostSerializer(blogPost models.BlogPost) map[string]interface{} {
 		"title":      blogPost.Title,
 		"content":    blogPost.Content,
 		"author":     blogPost.Author,
-		"created_on": blogPost.CreatedOn,
-		"updated_on": blogPost.UpdatedOn,
+		"thumbnail":  blogPost.Thumbnail,
+		"created_on": blogPost.CreatedOn.Format("January 2, 2006"),
+		"updated_on": blogPost.UpdatedOn.Format("January 2, 2006"),
 	}
 }
 
@@ -17,8 +23,8 @@ func BlogBlockSerializer(blogPost models.BlogPost) map[string]interface{} {
 	return map[string]interface{}{
 		"id":         blogPost.ID,
 		"title":      blogPost.Title,
-		"author":     blogPost.Author,
-		"created_on": blogPost.CreatedOn,
+		"author":     UserBlockSerializer(blogPost.Author),
+		"created_on": blogPost.CreatedOn.Format("January 2, 2006"),
 		"thumbnail":  blogPost.Thumbnail,
 	}
 }
@@ -32,13 +38,15 @@ func BlogListSerializer(blogPosts []models.BlogPost) []map[string]interface{} {
 }
 
 func CommentSerializer(comment models.Comment) map[string]interface{} {
+	var replies []models.Comment
+	database.DB.Preload(clause.Associations).Where("parent_id = ?", comment.ID).Find(&replies)
+
 	return map[string]interface{}{
 		"id":         comment.ID,
 		"content":    comment.Content,
-		"author":     comment.Author,
-		"blog_post":  comment.BlogPost,
-		"created_on": comment.CreatedOn,
-		"replies":    comment.Replies,
+		"author":     UserBlockSerializer(comment.Author),
+		"created_on": humanize.Time(comment.CreatedOn),
+		"replies":    CommentsListSerializer(replies),
 	}
 }
 
