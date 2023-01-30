@@ -60,7 +60,7 @@ func GetService(filename string) *drive.Service {
 }
 
 func InitializeDrive() {
-	service := GetService("./.env/drive-credentials.json")
+	service := GetService("./credentials/drive-credentials.json")
 	SERVICE = service
 
 	if database.DB.Find(&models.Folder{}).Where("id = ?", ROOT).RowsAffected == 0 {

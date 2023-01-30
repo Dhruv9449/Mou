@@ -1,4 +1,4 @@
-package main
+package management
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/Dhruv9449/mou/pkg/models"
 )
 
-func deleteBlogs() {
+func DeleteBlogs() {
 	var id int
 
 	fmt.Println("Enter id of blog to be deleted, -1 to delete all and 0 to cancel")

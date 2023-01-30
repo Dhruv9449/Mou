@@ -20,7 +20,7 @@ var (
 )
 
 func InitializeAuth() {
-	file, err := os.ReadFile("./.env/oauth2-credentials.json")
+	file, err := os.ReadFile("./credentials/oauth2-credentials.json")
 
 	if err != nil {
 		panic(err)

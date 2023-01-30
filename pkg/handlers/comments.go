@@ -23,7 +23,7 @@ func getComments(c *fiber.Ctx) error {
 	}
 
 	var comments []models.Comment
-	database.DB.Preload(clause.Associations).Where("blog_post_id = ? AND parent_id = 0", blog.ID).Order("created_on desc").Find(&comments)
+	database.DB.Preload(clause.Associations).Where("blog_post_id = ? AND parent_id IS NULL", blog.ID).Order("created_on desc").Find(&comments)
 
 	return c.Status(fiber.StatusOK).JSON(serializers.CommentsListSerializer(comments))
 }
@@ -51,6 +51,7 @@ func createComment(c *fiber.Ctx) error {
 	comment.Content = c.FormValue("content")
 	comment.Author = user
 	comment.BlogPost = blog
+	comment.CreatedOn = time.Now()
 
 	var parent models.Comment
 
@@ -63,12 +64,12 @@ func createComment(c *fiber.Ctx) error {
 			})
 		}
 
-		comment.ParentID = parent.ID
+		comment.ParentID = &parent.ID
+		database.DB.Create(&comment)
+	} else {
+		database.DB.Create(&comment)
 	}
 
-	comment.CreatedOn = time.Now()
-
-	database.DB.Create(&comment)
 	database.DB.Save(&comment)
 
 	return c.Status(fiber.StatusCreated).JSON(serializers.CommentSerializer(comment))

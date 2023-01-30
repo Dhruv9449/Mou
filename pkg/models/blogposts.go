@@ -25,6 +25,6 @@ type Comment struct {
 	BlogPost   BlogPost  `gorm:"ForeignKey:BlogPostID"`
 	BlogPostID uint      `gorm:"not null"`
 	CreatedOn  time.Time `gorm:"not null"`
-	Replies    []Comment `gorm:"ForeignKey:ParentID"`
-	ParentID   uint      `gorm:"default:null"`
+	Replies    []Comment `gorm:"ForeignKey:ParentID,OnDelete:CASCADE"`
+	ParentID   *uint     `gorm:"default:null"`
 }
